@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:route_news_app/core/helpers.dart';
 import 'package:route_news_app/modules/home/widgets/drawer_item.dart';
@@ -17,6 +18,7 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context)!;
     return SafeArea(
       child: Drawer(
         child: MyContainer(
@@ -28,7 +30,7 @@ class MyDrawer extends StatelessWidget {
                 color: const Color(0XFF39A552),
                 child: Center(
                   child: Text(
-                    'News App!',
+                    lang.news_app,
                     style: GoogleFonts.poppins(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -39,14 +41,14 @@ class MyDrawer extends StatelessWidget {
               ),
               DrawerItem(
                 iconData: Icons.menu,
-                title: 'Categories',
+                title: lang.categories,
                 onClicked: () {
                   categoriesOnClicked();
                 },
               ),
               DrawerItem(
                 iconData: Icons.settings,
-                title: 'Settings',
+                title: lang.settings,
                 onClicked: () {
                   settingsOnClicked();
                 },

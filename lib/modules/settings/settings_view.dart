@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:route_news_app/core/helpers.dart';
 import 'package:route_news_app/core/widgets/my_container.dart';
-import 'package:route_news_app/modules/settings/widgets/bottom_sheet_button.dart';
+import 'package:route_news_app/modules/settings/cubit/cubit.dart';
+import 'package:route_news_app/modules/settings/widgets/bottom_sheet_selected_item.dart';
+import 'package:route_news_app/modules/settings/widgets/bottom_sheet_unselected_item.dart';
 
 class SettingsView extends StatelessWidget {
   static const String routeName = 'settings';
@@ -11,6 +14,8 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var lang = AppLocalizations.of(context)!;
+    var cubit = SettingsCubit();
     return MyContainer(
       child: Padding(
         padding: const EdgeInsets.all(32.0),
@@ -18,7 +23,7 @@ class SettingsView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              'Language',
+              lang.language,
               style: GoogleFonts.poppins(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -55,16 +60,28 @@ class SettingsView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
-                          const BottomSheetButton(
-                            title: 'English',
-                          ),
-                          Text(
-                            'Arabic',
-                            style: GoogleFonts.exo(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
+                          cubit.isArabic()
+                              ? BottomSheetUnselectedItem(
+                                  title: lang.english,
+                                  onTap: () {
+                                    cubit.changeAppLang(language: 'en');
+                                    Navigator.pop(context);
+                                  },
+                                )
+                              : BottomSheetSelectedItem(
+                                  title: lang.english,
+                                ),
+                          cubit.isArabic()
+                              ? BottomSheetSelectedItem(
+                                  title: lang.arabic,
+                                )
+                              : BottomSheetUnselectedItem(
+                                  title: lang.arabic,
+                                  onTap: () {
+                                    cubit.changeAppLang(language: 'ar');
+                                    Navigator.pop(context);
+                                  },
+                                ),
                         ],
                       ),
                     ),
@@ -85,7 +102,7 @@ class SettingsView extends StatelessWidget {
                 child: Row(
                   children: [
                     Text(
-                      'English',
+                      cubit.isArabic() ? lang.arabic : lang.english,
                       style: GoogleFonts.exo(
                         fontSize: 18,
                         fontWeight: FontWeight.w500,

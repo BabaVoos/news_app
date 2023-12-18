@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class BottomSheetButton extends StatelessWidget {
+class BottomSheetSelectedItem extends StatelessWidget {
   final String title;
 
-  const BottomSheetButton({Key? key, required this.title}) : super(key: key);
+  BottomSheetSelectedItem({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
